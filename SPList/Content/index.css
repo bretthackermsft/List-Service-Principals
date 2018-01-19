@@ -1,0 +1,44 @@
+﻿
+html, body, div.container.body-content {
+    height: 100%;
+}
+
+#splist {
+    height: 90%;
+    overflow: auto;
+}
+
+#spdetail {
+    padding: 30px 4px 4px 4px;
+}
+
+div.detailItem {
+    border-bottom: 1px solid #2e5add;
+    margin-bottom: 3px;
+}
+
+#splist li {
+    padding: 9px;
+    min-width:200px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    #splist li:hover {
+        background-color: #4a4a4a;
+        color:#fefefe;
+    }
+
+div.spid {
+    font-size: .8em;
+    font-style: italic;
+}
+
+div.subitem {
+    max-height: 200px;
+    overflow: auto;
+}
+
+div.spname {
+    font-weight: bold;
+}

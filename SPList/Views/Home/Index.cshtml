@@ -1,0 +1,24 @@
+﻿@model  IEnumerable<SPList.Graph.ServicePrincipal>
+
+@{
+    ViewBag.Title = "Service Principals";
+}
+
+<div class="row" style="height:90%;">
+    <div class="col-sm-4" style="height:100%;">
+        <input id="txtFilter" type="text" class="form-control" placeholder="filter (name, id)" />
+        <ul class="list-group" id="splist"></ul>
+    </div>
+    <div id="spdetail" class="col-sm-8"></div>
+</div>
+
+@section scripts {
+<script type="text/javascript">
+    var spArr = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+<script type="text/javascript" src="~/Scripts/app/index.js"></script>
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/Content/index.css" />
+}
