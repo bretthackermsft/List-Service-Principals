@@ -17,10 +17,10 @@
     "tenantId": {
       "value": null
     },
-    "clientId_admin": {
+    "clientId": {
       "value": null
     },
-    "clientSecret_admin": {
+    "clientSecret": {
       "value": null
     },
     "repoURL": {
