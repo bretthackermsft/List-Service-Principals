@@ -117,6 +117,28 @@ namespace SPList.Graph
 
             return res;
         }
+        public static async Task<IEnumerable<SPoAuth2Perm>> GetOAuth2Permissions(string spid)
+        {
+
+            var res = new List<SPoAuth2Perm>();
+
+            AdalResponse serverResponse = null;
+            var permsUri = string.Format("/serviceprincipals/{0}/oAuth2Permissiongrants", spid);
+            serverResponse = await AdalLib.GetResourceAsync(permsUri);
+
+            if (serverResponse.Successful)
+            {
+                JObject data = JObject.Parse(serverResponse.ResponseContent);
+                IList<JToken> perms = data["value"].ToList();
+                foreach (var perm in perms)
+                {
+                    var item = JsonConvert.DeserializeObject<SPoAuth2Perm>(perm.ToString());
+                    res.Add(item);
+                }
+            }
+
+            return res;
+        }
     }
 
     public class SPAppRole
@@ -246,5 +268,40 @@ namespace SPList.Graph
         [DisplayName("Value")]
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
+    }
+
+    public class SPoAuth2Perm
+    {
+        [DisplayName("Client Id")]
+        [JsonProperty(PropertyName = "clientId")]
+        public string ClientId { get; set; }
+
+        [DisplayName("Consent Type")]
+        [JsonProperty(PropertyName = "consentType")]
+        public string ConsentType { get; set; }
+
+        [DisplayName("Expiry Time")]
+        [JsonProperty(PropertyName = "expiryTime")]
+        public DateTime ExpiryTime { get; set; }
+
+        [DisplayName("ID")]
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        [DisplayName("Principal ID")]
+        [JsonProperty(PropertyName = "principalId")]
+        public string PrincipalId { get; set; }
+
+        [DisplayName("Resource ID")]
+        [JsonProperty(PropertyName = "resourceId")]
+        public string ResourceId { get; set; }
+
+        [DisplayName("Scope")]
+        [JsonProperty(PropertyName = "scope")]
+        public string Scope { get; set; }
+
+        [DisplayName("Start Time")]
+        [JsonProperty(PropertyName = "startTime")]
+        public DateTime StartTime { get; set; }
     }
 }

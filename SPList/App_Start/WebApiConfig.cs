@@ -18,10 +18,10 @@ namespace SPList
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: WebApiConfig.UrlPrefix + "/{controller}/{id}",
+                routeTemplate: WebApiConfig.UrlPrefix + "/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

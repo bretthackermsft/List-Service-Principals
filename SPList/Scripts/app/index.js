@@ -27,14 +27,29 @@
     function loadDetail(data) {
         $("#spdetail").html("");
         for (key in data) {
-            var d = $("<div>").addClass("detailItem row");
-            $("<div>").addClass("col-sm-4").html(key).appendTo(d);
-            var val = $("<div>").addClass("col-sm-8 subitem");
-            var x = renderItem(data[key]);
-            val.html(x).appendTo(d);
-            $("#spdetail").append(d);
+            addDetail(key, data);
         }
+        $.getJSON("/api/Details/GetPerms/" + data.id).done(function (res) {
+            addDetail2("OAuth Permissions", res);
+        });
     }
+    function addDetail(key, data) {
+        var d = $("<div>").addClass("detailItem row");
+        $("<div>").addClass("col-sm-4").html(key).appendTo(d);
+        var val = $("<div>").addClass("col-sm-8 subitem");
+        var x = renderItem(data[key]);
+        val.html(x).appendTo(d);
+        $("#spdetail").append(d);
+    }
+    function addDetail2(label, data) {
+        var d = $("<div>").addClass("detailItem row");
+        $("<div>").addClass("col-sm-4").html(label).appendTo(d);
+        var val = $("<div>").addClass("col-sm-8 subitem");
+        var x = renderItem(data);
+        val.html(x).appendTo(d);
+        $("#spdetail").append(d);
+    }
+
     function renderItem(item) {
         switch (typeof item) {
             case "string":
