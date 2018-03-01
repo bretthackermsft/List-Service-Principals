@@ -80,7 +80,7 @@
     function checkLink(item) {
         if (item.substring(0, 4) == "http") {
             var d = $("<div>").html(item + "&nbsp;&nbsp;");
-            $("<a>").attr({ "target": "_blank", "href": item }).addClass("glyphicon glyphicon-globe").appendTo(d);
+            $("<a>").attr({ "target": "_blank", "href": item, "title":"Click to open link in a new window" }).addClass("glyphicon glyphicon-globe").appendTo(d);
             return d.html();
         } else {
             return item;

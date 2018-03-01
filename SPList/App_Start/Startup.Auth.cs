@@ -56,7 +56,29 @@ namespace SPList
                             context.HandleResponse(); // Suppress the exception
                             return Task.FromResult(0);
                         },
-                        AuthorizationCodeReceived = OnAuthorizationCodeReceived
+                        AuthorizationCodeReceived = OnAuthorizationCodeReceived,
+                        RedirectToIdentityProvider = (context) =>
+                        {
+                            var issuer = "";
+                            if (context.Request.QueryString.HasValue)
+                            {
+                                var user = HttpUtility.ParseQueryString(context.Request.QueryString.Value)["user"];
+                                if (user.Length > 0)
+                                {
+                                    var domain = user.Split('@')[1];
+                                    issuer = string.Format("https://login.microsoftonline.com/{0}/oauth2/authorize?login_hint={1}", domain, user);
+                                }
+                            }
+
+                            string appBaseUrl = context.Request.Scheme + "://" + context.Request.Host + context.Request.PathBase;
+                            context.ProtocolMessage.RedirectUri = appBaseUrl + "/";
+                            context.ProtocolMessage.PostLogoutRedirectUri = appBaseUrl;
+                            if (issuer != "")
+                            {
+                                context.ProtocolMessage.IssuerAddress = issuer;
+                            }
+                            return Task.FromResult(0);
+                        },
                     }
                 });
         }
